@@ -38,8 +38,15 @@ def api_root(request, format=None):
         'leaderboards': reverse('leaderboard-list', request=request, format=format),
     })
 
+import os
+
+# Get codespace name from environment variable
+codespace_name = os.environ.get('CODESPACE_NAME', None)
+
+api_base_url = f"api/"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path(api_base_url, include(router.urls)),
     path('', api_root, name='api-root'),
 ]
